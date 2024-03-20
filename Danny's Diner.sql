@@ -69,3 +69,19 @@ left join menu me
 on s.product_id = me.product_id
 where s.order_date < m.join_date
 group by m.customer_id
+
+  
+-- If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+  
+with point_system as(
+select product_name, product_id, 
+case 
+when product_name != 'sushi' then price * 10 
+when product_name = 'sushi' then 2*(price * 10)  end as points
+from menu)
+
+select distinct s.customer_id, sum(ps.points) as total_points
+from sales s
+left join point_system ps
+on s.product_id = ps.product_id
+group by s.customer_id
