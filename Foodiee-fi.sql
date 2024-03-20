@@ -6,7 +6,8 @@ select * from plans, subscriptions
 
  --What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
 SELECT
- month(start_date) month_mumber, datename(month, start_date)AS month_name, -- Cast start_date as month in numerical format
+ month(start_date) month_mumber -- Cast start_date as month in numerical format
+ , datename(month, start_date)AS month_name, 
  COUNT(s.customer_id) AS trial_plan_subscriptions
 FROM subscriptions AS s
 JOIN plans p
