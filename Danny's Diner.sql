@@ -59,3 +59,13 @@ INNER JOIN menu
   ON joined.product_id = menu.product_id
 WHERE row_num = 1
 ORDER BY customer_id ASC
+
+--What is the total items and amount spent for each member before they became a member?
+
+select m.customer_id, count(s.product_id) as total_items, sum(me.price) as totaal_amount_spent from members m
+left join sales s
+on m.customer_id = s.customer_id
+left join menu me
+on s.product_id = me.product_id
+where s.order_date < m.join_date
+group by m.customer_id
